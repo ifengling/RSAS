@@ -2,3 +2,4 @@ xlutils
 xlwt
 xlrd
 bs4
+lxml
