@@ -88,9 +88,9 @@ def search_data():
             for i in range(len(a)):
                 cve_num_row = re.findall('<ahref="http://cve.mitre.org/cgi-bin/cvename.cgi\?name=(.*)"target', cve_num[i])
                 if cve_num_row == []:
-                    x_cve_num_row.extend([" "])
+                    x_cve_num_row.append([" "])
                 else:
-                    x_cve_num_row.extend(cve_num_row)
+                    x_cve_num_row.append(cve_num_row)
 
 
             ##漏洞详情-漏洞名称
@@ -121,6 +121,7 @@ def input_data():
     list = search_data()
     x_ip, x_version, x_port, x_port_version, x_vul_level, x_port_version_port_compare, x_vul_info_name, x_cve_num_row, x_vul_info_name_compare, x_vul_info_ms, x_vul_info_solution = list['x_ip'], list['x_version'], list['x_port'], list['x_port_version'], list['x_vul_level'], list['x_port_version_port_compare'], list['x_vul_info_name'], list['x_cve_num_row'], list['x_vul_info_name_compare'], list['x_vul_info_ms'], list['x_vul_info_solution']
     workbook = xlwt.Workbook(encoding='utf-8')
+    print()
     data_sheet = workbook.add_sheet('RSAS扫描结果',cell_overwrite_ok=True)
     row0 = [u'IP地址', u'操作系统', u'端口', u'服务', u'风险等级', u'CVE编号', u'漏洞名称', u'漏洞描述', u'解决方法']
     ##行模板
@@ -147,6 +148,7 @@ def input_data():
    #风险等级写入
     for i in range(len(x_vul_level)):
        data_sheet.write(i+1, 4, x_vul_level[i])
+
    #漏洞名称写入##
     for i in range(len(x_vul_info_name)):
        data_sheet.write(i+1, 6, x_vul_info_name[i])
@@ -159,7 +161,7 @@ def input_data():
               data_sheet.write(i+1, 8, x_vul_info_solution[s].replace('<br/><br/>','\r\n').replace('<br/>','\r\n'))
           else:
               continue##
-    workbook.save('.\result.xls')  ###新表创建'''
+    workbook.save('./result.xls')  ###新表创建'''
     print("----------写入数据成功！--------")
 
 def main():
